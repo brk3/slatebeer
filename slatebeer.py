@@ -40,8 +40,10 @@ for row in rows:
       if len(beer_lookup.get('beers')) > 0:
           details = beer_lookup.get('beers')[0]
           print('{0} - {1} - {2}'.format(brewery, beer, details.overall_rating))
-          out = out + '<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>'.format(
-              brewery, beer, details.overall_rating)
+          out = out + '<tr><td>{0}</td>'.format(brewery)
+          out = out + '<td>{0}</td>'.format(beer)
+          out = out + '<td><a href="http://ratebeer.com/{0}">{1}</a></td></tr>'.format(
+              details.url, details.overall_rating)
     except Exception as e:
       print(e)
 
@@ -53,7 +55,8 @@ out = out + """
 
 msg = "\nLast Updated: {0}".format(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 print(msg)
-out = out + msg + '\n'
+out = out + '<br>' + msg + '<br>'
+out = out + '<br>https://github.com/brk3/slatebeer'
 
 with open('/tmp/slatebeer/slatebeer.html', 'w') as f:
   f.write(out)
